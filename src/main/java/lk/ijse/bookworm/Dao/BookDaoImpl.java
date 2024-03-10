@@ -1,9 +1,12 @@
 package lk.ijse.bookworm.Dao;
 
 import lk.ijse.bookworm.Config.FactoryConfiguration;
+import lk.ijse.bookworm.Entity.Book;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
+
+import java.util.List;
 
 public class BookDaoImpl {
 
@@ -41,5 +44,56 @@ public class BookDaoImpl {
             }
         }
         return "B001";
+    }
+
+    public List<Book> getAll() {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        NativeQuery nativeQuery = session.createNativeQuery("SELECT * FROM book ");
+        nativeQuery.addEntity(Book.class);
+        List<Book> books = nativeQuery.getResultList();
+
+        transaction.commit();
+        session.close();
+
+        return books;
+
+    }
+
+    public boolean Save(Book book) {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.save(book);
+
+        transaction.commit();
+        session.close();
+
+        return true;
+    }
+
+    public boolean delete(Book book) {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.remove(book);
+
+        transaction.commit();
+        session.close();
+
+        return true;
+    }
+
+    public boolean update(Book book) {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.update(book);
+
+        transaction.commit();
+        session.close();
+
+        return true;
     }
 }

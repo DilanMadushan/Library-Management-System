@@ -27,4 +27,12 @@ public class Book {
     @ManyToMany(mappedBy = "book")
     private List<Borrow> borrows;
 
+    public Book(String id, String title, String author, String genre, String status, Branch branch) {
+        this.id = id;
+        this.title = title;
+        this.author = author;
+        Genre = genre;
+        this.status = status;
+        this.branch = branch;
+    }
 }

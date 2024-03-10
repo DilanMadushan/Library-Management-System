@@ -6,15 +6,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import lk.ijse.bookworm.Dao.AdminDao;
+import lk.ijse.bookworm.Bo.AdminBoImpl;
+import lk.ijse.bookworm.Dao.AdminDaoImpl;
 import lk.ijse.bookworm.Dto.AdminDto;
 import lk.ijse.bookworm.Entity.Admin;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginPageController {
 
@@ -25,7 +29,7 @@ public class LoginPageController {
     @FXML
     private JFXTextField txtPassword;
 
-    AdminDao adminDao = new AdminDao();
+    AdminBoImpl adminBo = new AdminBoImpl();
 
     @FXML
     void createOnAction(ActionEvent event) throws IOException {
@@ -44,14 +48,32 @@ public class LoginPageController {
         String name = txtName.getText();
         String password = txtPassword.getText();
 
-        Admin admin = adminDao.get(new AdminDto(name,password));
+        if (name.isEmpty() || password.isEmpty()){
+            new Alert(Alert.AlertType.ERROR,"fields are empty").show();
+            return;
+        }
 
-        Parent rootNode = FXMLLoader.load(getClass().getResource("/view/Dashboard.fxml"));
-        Scene scene = new Scene(rootNode);
-        Stage stage = (Stage) AnchorPane.getScene().getWindow();
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
+
+        boolean isTrue = false;
+        try {
+            isTrue = adminBo.check(new AdminDto("",name,password));
+        } catch (Exception e) {
+            new Alert(Alert.AlertType.ERROR,"Check UserName or Password").show();
+            throw new RuntimeException(e);
+        }
+
+        if (isTrue) {
+            Parent rootNode = FXMLLoader.load(getClass().getResource("/view/Dashboard.fxml"));
+            Scene scene = new Scene(rootNode);
+            Stage stage = (Stage) txtName.getScene().getWindow();
+            stage.setScene(scene);
+            stage.centerOnScreen();
+            stage.show();
+        }else{
+            new Alert(Alert.AlertType.ERROR,"Check USerName or Password").show();
+        }
+
+
     }
 
     @FXML
@@ -60,8 +82,8 @@ public class LoginPageController {
     }
 
     @FXML
-    void passwordOnAction(ActionEvent event) {
-
+    void passwordOnAction(ActionEvent event) throws IOException {
+        loginOnAction(event);
     }
 
     public void closeOnAction(MouseEvent mouseEvent) {

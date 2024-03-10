@@ -1,5 +1,6 @@
 package lk.ijse.bookworm.Dto;
 
+import lk.ijse.bookworm.Entity.Admin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 
-public class AdminDto {
+public class BranchDto {
     private String id;
     private String name;
-    private String password;
-
+    private String location;
+    private String Address;
+    private Admin admin;
 }

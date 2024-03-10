@@ -64,7 +64,7 @@ public class DashboardController {
     void branchOnAction(ActionEvent event) throws IOException {
         Parent rootNOde = FXMLLoader.load(getClass().getResource("/view/branchManage.fxml"));
         Scene scene = new Scene(rootNOde);
-        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        Stage stage = (Stage) txtBookCount.getScene().getWindow();
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();

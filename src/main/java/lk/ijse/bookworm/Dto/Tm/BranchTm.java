@@ -1,4 +1,4 @@
-package lk.ijse.bookworm.Dto;
+package lk.ijse.bookworm.Dto.Tm;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 
-public class AdminDto {
+public class BranchTm {
     private String id;
     private String name;
-    private String password;
-
+    private String location;
+    private String Address;
+    private String Admin;
 }

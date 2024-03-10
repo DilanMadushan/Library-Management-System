@@ -18,28 +18,29 @@
                 <Font name="System Bold" size="86.0" />
             </font>
         </Text>
-        <JFXTextField fx:id="txtName" labelFloat="true" layoutX="64.0" layoutY="270.0" prefHeight="25.0" prefWidth="231.0" promptText="Name">
+        <JFXTextField fx:id="txtName" labelFloat="true" layoutX="64.0" layoutY="323.0" prefHeight="25.0" prefWidth="231.0" promptText="Name">
             <font>
                 <Font size="15.0" />
             </font>
         </JFXTextField>
-        <JFXTextField fx:id="txtLocation" layoutX="350.0" layoutY="270.0" prefHeight="25.0" prefWidth="231.0" promptText="Location">
+        <JFXTextField fx:id="txtLocation" layoutX="350.0" layoutY="323.0" prefHeight="25.0" prefWidth="231.0" promptText="Location">
             <font>
                 <Font size="15.0" />
             </font>
         </JFXTextField>
-        <JFXTextField fx:id="txtAddress" labelFloat="true" layoutX="64.0" layoutY="369.0" prefHeight="31.0" prefWidth="519.0" promptText="Address">
+        <JFXTextField fx:id="txtAddress" labelFloat="true" layoutX="64.0" layoutY="422.0" prefHeight="31.0" prefWidth="231.0" promptText="Address">
             <font>
                 <Font size="15.0" />
             </font>
         </JFXTextField>
-        <JFXComboBox fx:id="cmbAdmin" layoutX="64.0" layoutY="459.0" prefHeight="25.0" prefWidth="231.0" promptText="Admin" />
-        <TableView fx:id="tblBook" layoutX="645.0" layoutY="175.0" prefHeight="422.0" prefWidth="598.0">
+        <JFXComboBox fx:id="cmbAdmin" layoutX="350.0" layoutY="427.0" prefHeight="25.0" prefWidth="231.0" promptText="Admin" />
+        <TableView fx:id="tblBook" layoutX="627.0" layoutY="186.0" onMouseClicked="#mouseClickOnAction" prefHeight="422.0" prefWidth="614.0">
             <columns>
-                <TableColumn fx:id="colName" prefWidth="117.0" text="Name" />
-                <TableColumn fx:id="colLocation" prefWidth="121.0" text="Location" />
-                <TableColumn fx:id="colAddress" prefWidth="244.0" text="Address" />
-                <TableColumn fx:id="colAdmin" prefWidth="115.0" text="Admin" />
+            <TableColumn fx:id="colId" prefWidth="92.0" text="Id" />
+                <TableColumn fx:id="colName" prefWidth="120.0" text="Name" />
+                <TableColumn fx:id="colLocation" prefWidth="134.0" text="Location" />
+                <TableColumn fx:id="colAddress" minWidth="0.0" prefWidth="147.0" text="Address" />
+                <TableColumn fx:id="colAdmin" prefWidth="120.0" text="Admin" />
             </columns>
         </TableView>
         <JFXButton buttonType="RAISED" layoutX="69.0" layoutY="596.0" onAction="#addOnAction" prefHeight="41.0" prefWidth="109.0" style="-fx-background-color: #1877F2;" text="Add" textFill="WHITE">
@@ -62,5 +63,15 @@
             <Image url="@../images/icons8-back-64 (2).png" />
          </image>
       </ImageView>
+      <Text fill="#0d00ff" layoutX="65.0" layoutY="256.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Branch Id :" wrappingWidth="95.19997558593741">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtId" fill="#36a420" layoutX="165.0" layoutY="257.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B001" wrappingWidth="74.20001220703125">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
     </children>
 </AnchorPane>

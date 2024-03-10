@@ -16,7 +16,7 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </JFXButton>
-      <Text fill="#1877f2" fontSmoothingType="LCD" layoutX="112.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up" wrappingWidth="188.37628173828125">
+      <Text fill="#1877f2" fontSmoothingType="LCD" layoutX="112.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sign Up" wrappingWidth="188.37628173828125">
          <font>
             <Font name="System Bold" size="49.0" />
          </font>
@@ -36,5 +36,15 @@
             <Image url="@../images/icons8-close-208.png" />
          </image>
       </ImageView>
+      <Text fill="#0d00ff" layoutX="59.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Admin Id :" wrappingWidth="89.4000244140625">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="txtId" fill="#36a420" layoutX="152.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="B001" wrappingWidth="74.20001220703125">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

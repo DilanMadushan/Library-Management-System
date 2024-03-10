@@ -1,9 +1,11 @@
 package lk.ijse.bookworm.Entity;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -11,19 +13,17 @@ import java.util.List;
 @Data
 
 @Entity
-@Table (name = "Branch")
-public class Branch {
-
+@Table(name = "Borrow")
+public class Borrow {
     @Id
-    private String id;
-    private String name;
-    private String location;
-    private String Address;
+    private String borrowId;
+    private Date date;
+
+    @ManyToMany
+    private List<Book> book;
 
     @ManyToOne
-    private Admin admin;
+    private User user;
 
-    @OneToMany(mappedBy = "branch")
-    List<Book> books;
 
 }

@@ -10,12 +10,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import lk.ijse.bookworm.Bo.BookBoImpl;
 
 import java.io.IOException;
 
 public class BookManageController {
 
+    public Text txtId;
     @FXML
     private JFXComboBox<?> cmbBranch;
 
@@ -48,6 +51,17 @@ public class BookManageController {
 
     @FXML
     private JFXTextField txtTitle;
+    
+    BookBoImpl bookBo = new BookBoImpl();
+
+    public void initialize(){
+        generateNextId();
+    }
+
+    private void generateNextId() {
+        String id = bookBo.generateNextBookId();
+        txtId.setText(id);
+    }
 
     @FXML
     void addOnAction(ActionEvent event) {

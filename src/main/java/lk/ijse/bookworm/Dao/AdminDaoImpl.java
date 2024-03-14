@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AdminDaoImpl {
 
-    public boolean save(Admin admin) {
+    public boolean save(Admin admin)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -25,7 +25,7 @@ public class AdminDaoImpl {
         return true;
     }
 
-    public List getAll() {
+    public List getAll()throws Exception{
 
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -43,7 +43,7 @@ public class AdminDaoImpl {
         return admins;
     }
 
-    public boolean check(Admin admin) {
+    public boolean check(Admin admin)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -65,7 +65,7 @@ public class AdminDaoImpl {
     }
 
 
-    public String generateNextId() {
+    public String generateNextId()throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -81,7 +81,7 @@ public class AdminDaoImpl {
         }
     }
 
-    private String splitId(String currentId) {
+    private String splitId(String currentId)throws Exception{
         if(currentId != null) {
             String[] strings = currentId.split("A0");
             int id = Integer.parseInt(strings[1]);

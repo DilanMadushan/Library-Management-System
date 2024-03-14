@@ -1,5 +1,6 @@
-package lk.ijse.bookworm.Bo;
+package lk.ijse.bookworm.Bo.Custom.impl;
 
+import lk.ijse.bookworm.Bo.Custom.UserBo;
 import lk.ijse.bookworm.Dao.UserDaoImpl;
 import lk.ijse.bookworm.Dto.UserDto;
 import lk.ijse.bookworm.Entity.User;
@@ -7,10 +8,11 @@ import lk.ijse.bookworm.Entity.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserBoImpl {
+public class UserBoImpl implements UserBo {
 
     UserDaoImpl userDao = new UserDaoImpl();
-    public List<UserDto> getAllUser() {
+    @Override
+    public List<UserDto> getAllUser() throws Exception {
         List<User> users = userDao.getAll();
         List<UserDto> userDto = new ArrayList<>();
 
@@ -26,11 +28,13 @@ public class UserBoImpl {
         return userDto;
     }
 
-    public String generateNextUserId() {
+    @Override
+    public String generateNextUserId() throws Exception {
         return userDao.generateNextId();
     }
 
-    public boolean saveUser(UserDto userDto) {
+    @Override
+    public boolean saveUser(UserDto userDto) throws Exception {
         return userDao.save(new User(
                 userDto.getId(),
                 userDto.getName(),
@@ -40,7 +44,8 @@ public class UserBoImpl {
         ));
     }
 
-    public boolean DeleteUser(UserDto userDto) {
+    @Override
+    public boolean DeleteUser(UserDto userDto) throws Exception {
         return userDao.delete(new User(
                 userDto.getId(),
                 userDto.getName(),
@@ -50,7 +55,8 @@ public class UserBoImpl {
         ));
     }
 
-    public boolean updateUser(UserDto userDto) {
+    @Override
+    public boolean updateUser(UserDto userDto) throws Exception {
         return userDao.update(new User(
                 userDto.getId(),
                 userDto.getName(),
@@ -60,6 +66,7 @@ public class UserBoImpl {
         ));
     }
 
+    @Override
     public UserDto SearchUser(String id) throws Exception {
         User user = userDao.Search(id);
 

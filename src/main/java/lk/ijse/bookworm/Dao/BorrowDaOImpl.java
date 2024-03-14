@@ -6,7 +6,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 
 public class BorrowDaOImpl {
-    public String generateNextValue() {
+    public String generateNextValue() throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -22,7 +22,7 @@ public class BorrowDaOImpl {
         }
     }
 
-    private String splitId(String currentId) {
+    private String splitId(String currentId) throws Exception{
         if (currentId != null) {
             String[] strings = currentId.split("BO0");
             int id = Integer.parseInt(strings[1]);
@@ -42,7 +42,7 @@ public class BorrowDaOImpl {
         return "BO001";
     }
 
-    public String generateNextValue2() {
+    public String generateNextValue2()throws Exception {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -58,7 +58,7 @@ public class BorrowDaOImpl {
         }
     }
 
-    private String splitId2(String currentId) {
+    private String splitId2(String currentId) throws Exception{
         if (currentId != null) {
             String[] strings = currentId.split("OD0");
             int id = Integer.parseInt(strings[1]);

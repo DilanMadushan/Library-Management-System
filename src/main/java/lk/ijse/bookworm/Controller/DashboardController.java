@@ -70,11 +70,6 @@ public class DashboardController {
         stage.show();
     }
 
-    @FXML
-    void notifyOnAction(ActionEvent event) {
-
-
-    }
 
     public void mouseClickOnAction(MouseEvent mouseEvent) {
         Stage stage = (Stage) txtBookCount.getScene().getWindow();
@@ -96,5 +91,23 @@ public class DashboardController {
             stage.centerOnScreen();
 
         }
+    }
+
+    public void historyOnAction(ActionEvent actionEvent) throws IOException {
+        Parent rootNOde = FXMLLoader.load(getClass().getResource("/view/historyManage.fxml"));
+        Scene scene = new Scene(rootNOde);
+        Stage stage = (Stage) txtBookCount.getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
+
+    public void timeOutOnAction(ActionEvent actionEvent) throws IOException {
+        Parent rootNOde = FXMLLoader.load(getClass().getResource("/view/timeOutManage.fxml"));
+        Scene scene = new Scene(rootNOde);
+        Stage stage = (Stage) txtBookCount.getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
     }
 }

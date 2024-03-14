@@ -17,12 +17,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import lk.ijse.bookworm.Bo.BookBoImpl;
-import lk.ijse.bookworm.Bo.BorrowBoImpl;
-import lk.ijse.bookworm.Bo.UserBoImpl;
+import lk.ijse.bookworm.Bo.BoFactory;
+import lk.ijse.bookworm.Bo.Custom.BookBo;
+import lk.ijse.bookworm.Bo.Custom.BorrowBo;
+import lk.ijse.bookworm.Bo.Custom.UserBo;
+import lk.ijse.bookworm.Bo.Custom.impl.BookBoImpl;
+import lk.ijse.bookworm.Bo.Custom.impl.BorrowBoImpl;
+import lk.ijse.bookworm.Bo.Custom.impl.UserBoImpl;
 import lk.ijse.bookworm.Config.FactoryConfiguration;
 import lk.ijse.bookworm.Dto.BookDto;
-import lk.ijse.bookworm.Dto.BorrowDto;
 import lk.ijse.bookworm.Dto.Tm.BorrowTm;
 import lk.ijse.bookworm.Dto.UserDto;
 import lk.ijse.bookworm.Entity.Book;
@@ -81,11 +84,11 @@ public class BorrowManageController {
     @FXML
     private JFXTextField txtName;
 
-    UserBoImpl userBo = new UserBoImpl();
+    UserBo userBo = (UserBo) BoFactory.getBoFactory().getBo(BoFactory.BOTypes.USER);
 
-    BookBoImpl bookBo = new BookBoImpl();
+    BookBo bookBo = (BookBo) BoFactory.getBoFactory().getBo(BoFactory.BOTypes.BOOK);
 
-    BorrowBoImpl borrowBo = new BorrowBoImpl();
+    BorrowBo borrowBo = (BorrowBo) BoFactory.getBoFactory().getBo(BoFactory.BOTypes.BORROW);
 
     ObservableList<BorrowTm> borrowTmList = FXCollections.observableArrayList();
 
@@ -110,12 +113,23 @@ public class BorrowManageController {
     }
 
     private String generateOrderDetailId() {
-        return  borrowBo.generateNextOrderDetailId();
+        try {
+            return  borrowBo.generateNextOrderDetailId();
+        } catch (Exception e) {
+
+        }
+        return null;
     }
 
     private void generateBorrowId() {
-        String borrowId = borrowBo.genarateNextBorrowId();
-        txtBorrowId.setText(borrowId);
+
+        try{
+            String borrowId = borrowBo.genarateNextBorrowId();
+            txtBorrowId.setText(borrowId);
+
+        }catch (Exception e){
+
+        }
 
     }
 
@@ -138,26 +152,39 @@ public class BorrowManageController {
     }
 
     private void setBook() {
-        List<BookDto> bookDto = bookBo.getAllBooks();
-        ObservableList<String> bookLIST = FXCollections.observableArrayList();
 
-        for(BookDto dto: bookDto){
-            bookLIST.add(dto.getId());
+        try{
+            List<BookDto> bookDto = bookBo.getAllBooks();
+            ObservableList<String> bookLIST = FXCollections.observableArrayList();
+
+            for(BookDto dto: bookDto){
+                bookLIST.add(dto.getId());
+            }
+            cmbBook.setItems(bookLIST);
+
+        }catch (Exception e){
+
         }
-        cmbBook.setItems(bookLIST);
     }
 
     private void setMember() {
-        List<UserDto> user = userBo.getAllUser();
 
-        ObservableList<String> userDto = FXCollections.observableArrayList();
+        try {
+            List<UserDto> user = userBo.getAllUser();
 
-        for(UserDto dto : user){
-            userDto.add(
-                    dto.getId()
-            );
+            ObservableList<String> userDto = FXCollections.observableArrayList();
+
+            for(UserDto dto : user){
+                userDto.add(
+                        dto.getId()
+                );
+            }
+            cmbMember.setItems(userDto);
+
+        }catch (Exception e){
+
         }
-        cmbMember.setItems(userDto);
+
     }
 
 
@@ -169,6 +196,15 @@ public class BorrowManageController {
         String status = (String) cmbStstus.getValue();
         LocalDate borrowDate = borrowdDate.getValue();
         LocalDate returndDate = returnDate.getValue();
+
+        try {
+            if(bookBo.searchBook(bookId).getStatus().equals("Unavailable") && status.equals("Borrow")){
+                new Alert(Alert.AlertType.ERROR,"Book Unavailable").show();
+                return;
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
         BorrowTm borrowTms = new BorrowTm(memberId,bookId,status,borrowDate,returndDate);
 
@@ -289,7 +325,6 @@ public class BorrowManageController {
                 }
 
                 transaction.commit();
-                session.close();
 
                 new Alert(Alert.AlertType.CONFIRMATION, "Borrowed Successfully").show();
 
@@ -297,6 +332,8 @@ public class BorrowManageController {
                 transaction.rollback();
                 throw new RuntimeException(e);
 
+            }finally {
+                session.close();
             }
             borrowTmList.clear();
             initialize();
@@ -309,6 +346,7 @@ public class BorrowManageController {
         cmbStstus.setValue("");
         txtBookName.clear();
         txtName.clear();
+        detailId.clear();
     }
 
 
@@ -324,6 +362,71 @@ public class BorrowManageController {
 
     @FXML
     void returnOnAction(ActionEvent event) {
+        if(borrowTmList.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR,"borrow table is Empty").show();
+            return;
+        }
+
+        Session session = null;
+        Transaction transaction = null;
+
+        try {
+            String memberId = (String) cmbMember.getValue();
+            String bookId = (String) cmbBook.getValue();
+            String status = (String) cmbStstus.getValue();
+            LocalDate borrowDate = borrowdDate.getValue();
+            LocalDate returndDate = returnDate.getValue();
+
+
+            session = FactoryConfiguration.getInstance().getSession();
+            transaction = session.beginTransaction();
+
+            Borrow borrow = new Borrow();
+            user.setId(memberId);
+
+            borrow.setBorrowId(txtBorrowId.getText());
+            borrow.setDate(borrowDate);
+            borrow.setUser(user);
+
+            session.save(borrow);
+
+
+            int i = 0;
+            for (BorrowTm borrowTm : borrowTmList) {
+                session.save(new BookDetails(
+                        detailId.get(i),
+                        new Book(borrowTm.getBookId()),
+                        new Borrow(txtBorrowId.getText()),
+                        borrowTm.getStatus(),
+                        borrowTm.getBorrowDate(),
+                        borrowTm.getReturnDate()
+
+                ));
+                i++;
+            }
+
+            for (BorrowTm borrowTm : borrowTmList) {
+                String id = borrowTm.getBookId();
+                Book book = session.get(Book.class, id);
+                book.setStatus("Available");
+                session.update(book);
+
+            }
+
+            transaction.commit();
+
+            new Alert(Alert.AlertType.CONFIRMATION, "Return Successfully").show();
+
+        } catch (Exception e) {
+            transaction.rollback();
+            throw new RuntimeException(e);
+
+        }finally {
+            session.close();
+        }
+        borrowTmList.clear();
+        initialize();
+        clearFelds();
 
     }
 

@@ -1,22 +1,22 @@
-package lk.ijse.bookworm.Bo;
+package lk.ijse.bookworm.Bo.Custom.impl;
 
+import lk.ijse.bookworm.Bo.Custom.BookBo;
 import lk.ijse.bookworm.Dao.BookDaoImpl;
 import lk.ijse.bookworm.Dto.BookDto;
 import lk.ijse.bookworm.Entity.Book;
-import lk.ijse.bookworm.Entity.Borrow;
-import lk.ijse.bookworm.Entity.Branch;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookBoImpl {
+public class BookBoImpl implements BookBo {
 
     BookDaoImpl bookDao = new BookDaoImpl();
-    public String generateNextBookId() {
+    @Override
+    public String generateNextBookId() throws Exception {
         return bookDao.generateNextId();
     }
-
-    public List<BookDto> getAllBooks() {
+    @Override
+    public List<BookDto> getAllBooks() throws Exception {
         List<Book> books = bookDao.getAll();
 
         List<BookDto> bookDto = new ArrayList<>();
@@ -34,7 +34,8 @@ public class BookBoImpl {
         return bookDto;
     }
 
-    public boolean saveBook(BookDto bookDto) {
+    @Override
+    public boolean saveBook(BookDto bookDto) throws Exception {
         return bookDao.Save(new Book(
                 bookDto.getId(),
                 bookDto.getTitle(),
@@ -44,8 +45,8 @@ public class BookBoImpl {
                 bookDto.getBranch()
         ));
     }
-
-    public boolean deleteBook(BookDto bookDto) {
+    @Override
+    public boolean deleteBook(BookDto bookDto) throws Exception {
         return bookDao.delete(new Book(
                 bookDto.getId(),
                 bookDto.getTitle(),
@@ -55,8 +56,8 @@ public class BookBoImpl {
                 bookDto.getBranch()
         ));
     }
-
-    public boolean updateBook(BookDto bookDto) {
+    @Override
+    public boolean updateBook(BookDto bookDto) throws Exception {
         return bookDao.update(new Book(
                 bookDto.getId(),
                 bookDto.getTitle(),
@@ -66,7 +67,7 @@ public class BookBoImpl {
                 bookDto.getBranch()
         ));
     }
-
+    @Override
     public BookDto searchBook(String id) throws Exception {
         Book book = bookDao.search(id);
 

@@ -1,5 +1,6 @@
-package lk.ijse.bookworm.Bo;
+package lk.ijse.bookworm.Bo.Custom.impl;
 
+import lk.ijse.bookworm.Bo.Custom.AdminBo;
 import lk.ijse.bookworm.Dao.AdminDaoImpl;
 import lk.ijse.bookworm.Dto.AdminDto;
 import lk.ijse.bookworm.Entity.Admin;
@@ -8,20 +9,22 @@ import lk.ijse.bookworm.Entity.Branch;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminBoImpl{
+public class AdminBoImpl implements AdminBo {
 
     AdminDaoImpl adminDao = new AdminDaoImpl();
 
-    public boolean saveCustomer(AdminDto adminDto) {
+    @Override
+    public boolean saveCustomer(AdminDto adminDto) throws Exception {
         return adminDao.save(new Admin(adminDto.getId(),adminDto.getName(),adminDto.getPassword(),new ArrayList<Branch>()));
     }
 
-    public boolean check(AdminDto adminDto) {
+    @Override
+    public boolean check(AdminDto adminDto) throws Exception {
         System.out.println("cheak "+adminDto.getName());
         return adminDao.check(new Admin(adminDto.getName(),adminDto.getPassword(),new ArrayList<Branch>()));
     }
-
-    public List<AdminDto> getAllAdmin() {
+    @Override
+    public List<AdminDto> getAllAdmin() throws Exception {
         List<Admin> admins = adminDao.getAll();
 
         List<AdminDto> adminDtoList = new ArrayList<>();
@@ -32,8 +35,8 @@ public class AdminBoImpl{
         return adminDtoList;
     }
 
-
-    public String genarateNextAdminId() {
+    @Override
+    public String genarateNextAdminId() throws Exception {
         return adminDao.generateNextId();
     }
 }

@@ -16,8 +16,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import lk.ijse.bookworm.Bo.BookBoImpl;
-import lk.ijse.bookworm.Bo.BranchBoImpl;
+import lk.ijse.bookworm.Bo.BoFactory;
+import lk.ijse.bookworm.Bo.Custom.BookBo;
+import lk.ijse.bookworm.Bo.Custom.BranchBo;
+import lk.ijse.bookworm.Bo.Custom.impl.BookBoImpl;
+import lk.ijse.bookworm.Bo.Custom.impl.BranchBoImpl;
 import lk.ijse.bookworm.Dto.BookDto;
 import lk.ijse.bookworm.Dto.BranchDto;
 import lk.ijse.bookworm.Dto.Tm.BookTm;
@@ -63,8 +66,8 @@ public class BookManageController {
     @FXML
     private JFXTextField txtTitle;
     
-    BookBoImpl bookBo = new BookBoImpl();
-    BranchBoImpl branchBo = new BranchBoImpl();
+    BookBo bookBo = (BookBo) BoFactory.getBoFactory().getBo(BoFactory.BOTypes.BOOK);
+    BranchBo branchBo = (BranchBo) BoFactory.getBoFactory().getBo(BoFactory.BOTypes.BRANCH);
 
     Branch branch = new Branch();
 
@@ -77,21 +80,28 @@ public class BookManageController {
     }
 
     private void getAllBooks() {
-        List<BookDto> books = bookBo.getAllBooks();
 
-        ObservableList<BookTm> bookTm = FXCollections.observableArrayList();
+        try{
+            List<BookDto> books = bookBo.getAllBooks();
 
-        for(BookDto dto :books){
-            bookTm.add(new BookTm(
-                    dto.getId(),
-                    dto.getTitle(),
-                    dto.getAuthor(),
-                    dto.getGenre(),
-                    dto.getStatus(),
-                    dto.getBranch().getId()
-            ));
+            ObservableList<BookTm> bookTm = FXCollections.observableArrayList();
+
+            for(BookDto dto :books){
+                bookTm.add(new BookTm(
+                        dto.getId(),
+                        dto.getTitle(),
+                        dto.getAuthor(),
+                        dto.getGenre(),
+                        dto.getStatus(),
+                        dto.getBranch().getId()
+                ));
+            }
+            tblBook.setItems(bookTm);
+
+        }catch (Exception e){
+
         }
-        tblBook.setItems(bookTm);
+
     }
 
     private void setCellValues() {
@@ -130,8 +140,14 @@ public class BookManageController {
     }
 
     private void generateNextId() {
-        String id = bookBo.generateNextBookId();
-        txtId.setText(id);
+
+        try{
+            String id = bookBo.generateNextBookId();
+            txtId.setText(id);
+
+        }catch (Exception e){
+
+        }
     }
 
     @FXML
@@ -146,15 +162,20 @@ public class BookManageController {
         System.out.println(Status);
 
         branch.setId(Branch);
+        try{
+            boolean isSaved = bookBo.saveBook(new BookDto(id,title,author,Genre,Status,branch));
+            if (isSaved) {
+                new Alert(Alert.AlertType.CONFIRMATION,"Save Successfully").show();
+                initialize();
+                clearFeilds();
+            }else{
+                new Alert(Alert.AlertType.ERROR,"Save Failed").show();
+            }
+        }catch (Exception e){
 
-        boolean isSaved = bookBo.saveBook(new BookDto(id,title,author,Genre,Status,branch));
-        if (isSaved) {
-            new Alert(Alert.AlertType.CONFIRMATION,"Save Successfully").show();
-            initialize();
-            clearFeilds();
-        }else{
-            new Alert(Alert.AlertType.ERROR,"Save Failed").show();
         }
+
+
     }
 
     @FXML
@@ -168,14 +189,19 @@ public class BookManageController {
 
         branch.setId(Branch);
 
-        boolean idDelete = bookBo.deleteBook(new BookDto(id,title,author,Genre,Status,branch));
+        try{
+            boolean idDelete = bookBo.deleteBook(new BookDto(id,title,author,Genre,Status,branch));
 
-        if (idDelete) {
-            new Alert(Alert.AlertType.CONFIRMATION,"Delete Successfully").show();
-            initialize();
-            clearFeilds();
-        }else{
-            new Alert(Alert.AlertType.ERROR,"Delete Failed").show();
+            if (idDelete) {
+                new Alert(Alert.AlertType.CONFIRMATION,"Delete Successfully").show();
+                initialize();
+                clearFeilds();
+            }else{
+                new Alert(Alert.AlertType.ERROR,"Delete Failed").show();
+            }
+
+        }catch (Exception e){
+
         }
 
     }
@@ -191,15 +217,22 @@ public class BookManageController {
 
         branch.setId(Branch);
 
-        boolean isUpdate = bookBo.updateBook(new BookDto(id,title,author,Genre,Status,branch));
+        try{
+            boolean isUpdate = bookBo.updateBook(new BookDto(id,title,author,Genre,Status,branch));
 
-        if (isUpdate) {
-            new Alert(Alert.AlertType.CONFIRMATION,"Update Successfully").show();
-            initialize();
-            clearFeilds();
-        }else{
-            new Alert(Alert.AlertType.ERROR,"Update Failed").show();
+            if (isUpdate) {
+                new Alert(Alert.AlertType.CONFIRMATION,"Update Successfully").show();
+                initialize();
+                clearFeilds();
+            }else{
+                new Alert(Alert.AlertType.ERROR,"Update Failed").show();
+            }
+
+        }catch (Exception e){
+
         }
+
+
 
     }
 

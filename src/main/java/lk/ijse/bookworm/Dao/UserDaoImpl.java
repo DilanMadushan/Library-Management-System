@@ -9,7 +9,7 @@ import org.hibernate.query.NativeQuery;
 import java.util.List;
 
 public class UserDaoImpl {
-    public List<User> getAll() {
+    public List<User> getAll() throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -23,7 +23,7 @@ public class UserDaoImpl {
         return users;
     }
 
-    public String generateNextId() {
+    public String generateNextId() throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -39,7 +39,7 @@ public class UserDaoImpl {
         }
     }
 
-    private String splitId(String currentId) {
+    private String splitId(String currentId) throws Exception{
         if(currentId != null) {
             String[] strings = currentId.split("U0");
             int id = Integer.parseInt(strings[1]);
@@ -59,7 +59,7 @@ public class UserDaoImpl {
         return "U001";
     }
 
-    public boolean save(User user) {
+    public boolean save(User user) throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -70,7 +70,7 @@ public class UserDaoImpl {
         return true;
     }
 
-    public boolean delete(User user) {
+    public boolean delete(User user) throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -82,7 +82,7 @@ public class UserDaoImpl {
 
     }
 
-    public boolean update(User user) {
+    public boolean update(User user)throws Exception {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -93,7 +93,7 @@ public class UserDaoImpl {
         return true;
     }
 
-    public User Search(String id) {
+    public User Search(String id)throws Exception {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 

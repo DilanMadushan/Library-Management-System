@@ -1,22 +1,24 @@
-package lk.ijse.bookworm.Bo;
+package lk.ijse.bookworm.Bo.Custom.impl;
 
+import lk.ijse.bookworm.Bo.Custom.BranchBo;
 import lk.ijse.bookworm.Dao.AdminDaoImpl;
 import lk.ijse.bookworm.Dao.BranchDaoImpl;
 import lk.ijse.bookworm.Dto.BranchDto;
-import lk.ijse.bookworm.Entity.Admin;
 import lk.ijse.bookworm.Entity.Book;
 import lk.ijse.bookworm.Entity.Branch;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BranchBoImpl {
+public class BranchBoImpl implements BranchBo {
     BranchDaoImpl branchDao = new BranchDaoImpl();
     AdminDaoImpl adminDao = new AdminDaoImpl();
+    @Override
     public String generateNextId() throws Exception{
         return branchDao.genatareNextId();
     }
 
+    @Override
     public List<BranchDto> getAllBranch()throws Exception {
         List<Branch> branches = branchDao.getAll();
         List<BranchDto> branchDto = new ArrayList<>();
@@ -33,6 +35,7 @@ public class BranchBoImpl {
         return branchDto;
     }
 
+    @Override
     public boolean save(BranchDto branchDto) throws Exception{
 
         return branchDao.save(new Branch(
@@ -45,6 +48,7 @@ public class BranchBoImpl {
         ));
     }
 
+    @Override
     public boolean deleteBranch(BranchDto branchDto)throws Exception {
         return branchDao.delete(new Branch(
                 branchDto.getId(),
@@ -56,6 +60,7 @@ public class BranchBoImpl {
         ));
     }
 
+    @Override
     public boolean updateBranch(BranchDto branchDto) throws Exception{
         return branchDao.update(new Branch(
                 branchDto.getId(),

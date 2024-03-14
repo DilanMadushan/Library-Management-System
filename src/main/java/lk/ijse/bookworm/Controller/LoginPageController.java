@@ -11,14 +11,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import lk.ijse.bookworm.Bo.AdminBoImpl;
-import lk.ijse.bookworm.Dao.AdminDaoImpl;
+import lk.ijse.bookworm.Bo.BoFactory;
+import lk.ijse.bookworm.Bo.Custom.AdminBo;
+import lk.ijse.bookworm.Bo.Custom.impl.AdminBoImpl;
 import lk.ijse.bookworm.Dto.AdminDto;
-import lk.ijse.bookworm.Entity.Admin;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LoginPageController {
 
@@ -29,7 +27,7 @@ public class LoginPageController {
     @FXML
     private JFXTextField txtPassword;
 
-    AdminBoImpl adminBo = new AdminBoImpl();
+    AdminBo adminBo = (AdminBo) BoFactory.getBoFactory().getBo(BoFactory.BOTypes.ADMIN);
 
     @FXML
     void createOnAction(ActionEvent event) throws IOException {

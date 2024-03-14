@@ -16,8 +16,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import lk.ijse.bookworm.Bo.AdminBoImpl;
-import lk.ijse.bookworm.Bo.BranchBoImpl;
+import lk.ijse.bookworm.Bo.BoFactory;
+import lk.ijse.bookworm.Bo.Custom.AdminBo;
+import lk.ijse.bookworm.Bo.Custom.BranchBo;
+import lk.ijse.bookworm.Bo.Custom.impl.AdminBoImpl;
+import lk.ijse.bookworm.Bo.Custom.impl.BranchBoImpl;
 import lk.ijse.bookworm.Dto.AdminDto;
 import lk.ijse.bookworm.Dto.BranchDto;
 import lk.ijse.bookworm.Dto.Tm.BranchTm;
@@ -57,8 +60,8 @@ public class branchManageController {
     @FXML
     private JFXTextField txtName;
 
-    BranchBoImpl branchBo = new BranchBoImpl();
-    AdminBoImpl adminBo = new AdminBoImpl();
+    BranchBo branchBo = (BranchBo) BoFactory.getBoFactory().getBo(BoFactory.BOTypes.BRANCH);
+    AdminBo adminBo = (AdminBo) BoFactory.getBoFactory().getBo(BoFactory.BOTypes.ADMIN);
 
     Admin admin = new Admin();
 
@@ -111,15 +114,22 @@ public class branchManageController {
     }
 
     private void setAdmin() {
-        List<AdminDto> adminDtoList = adminBo.getAllAdmin();
 
-        ObservableList<String> admins = FXCollections.observableArrayList();
+        try{
+            List<AdminDto> adminDtoList = adminBo.getAllAdmin();
 
-        for(AdminDto adminDto : adminDtoList){
-            admins.add(adminDto.getId());
-            System.out.println(adminDto.getId());
+            ObservableList<String> admins = FXCollections.observableArrayList();
+
+            for(AdminDto adminDto : adminDtoList){
+                admins.add(adminDto.getId());
+                System.out.println(adminDto.getId());
+            }
+            cmbAdmin.setItems(admins);
+
+        }catch (Exception e){
+
         }
-        cmbAdmin.setItems(admins);
+
     }
 
     @FXML

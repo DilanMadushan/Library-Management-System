@@ -7,12 +7,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import lk.ijse.bookworm.Bo.AdminBoImpl;
-import lk.ijse.bookworm.Config.FactoryConfiguration;
-import lk.ijse.bookworm.Dao.AdminDaoImpl;
+import lk.ijse.bookworm.Bo.BoFactory;
+import lk.ijse.bookworm.Bo.Custom.AdminBo;
+import lk.ijse.bookworm.Bo.Custom.impl.AdminBoImpl;
 import lk.ijse.bookworm.Dto.AdminDto;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 public class CreateAccountController {
 
@@ -23,7 +21,7 @@ public class CreateAccountController {
     @FXML
     private JFXTextField txtPassword;
 
-    private AdminBoImpl adminBo = new AdminBoImpl();
+    private AdminBo adminBo = (AdminBo) BoFactory.getBoFactory().getBo(BoFactory.BOTypes.ADMIN);
 
     public void initialize(){
 
@@ -31,8 +29,15 @@ public class CreateAccountController {
     }
 
     private void genarateNextAdminId() {
-        String id = adminBo.genarateNextAdminId();
-        txtId.setText(id);
+
+        try{
+
+            String id = adminBo.genarateNextAdminId();
+            txtId.setText(id);
+
+        }catch (Exception e){
+
+        }
     }
 
     @FXML
@@ -47,14 +52,21 @@ public class CreateAccountController {
             new Alert(Alert.AlertType.ERROR,"fields are empty").show();
         }
 
-        boolean isSaved = adminBo.saveCustomer(new AdminDto(id,name,password));
+        try{
 
-        if (isSaved) {
-            new Alert(Alert.AlertType.CONFIRMATION,"Saved successfully").show();
-            initialize();
-        }else{
-            new Alert(Alert.AlertType.ERROR,"Saved failed").show();
+            boolean isSaved = adminBo.saveCustomer(new AdminDto(id,name,password));
+
+            if (isSaved) {
+                new Alert(Alert.AlertType.CONFIRMATION,"Saved successfully").show();
+                initialize();
+            }else{
+                new Alert(Alert.AlertType.ERROR,"Saved failed").show();
+            }
+
+        }catch (Exception e){
+
         }
+
 
     }
 

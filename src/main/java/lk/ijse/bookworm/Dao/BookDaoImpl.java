@@ -10,7 +10,7 @@ import java.util.List;
 
 public class BookDaoImpl {
 
-    public String generateNextId() {
+    public String generateNextId()throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -26,7 +26,7 @@ public class BookDaoImpl {
         }
     }
 
-    private String splitId(String currentId) {
+    private String splitId(String currentId)throws Exception {
         if(currentId != null) {
             String[] strings = currentId.split("B0");
             int id = Integer.parseInt(strings[1]);
@@ -46,7 +46,7 @@ public class BookDaoImpl {
         return "B001";
     }
 
-    public List<Book> getAll() {
+    public List<Book> getAll()throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -61,7 +61,7 @@ public class BookDaoImpl {
 
     }
 
-    public boolean Save(Book book) {
+    public boolean Save(Book book)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -73,7 +73,7 @@ public class BookDaoImpl {
         return true;
     }
 
-    public boolean delete(Book book) {
+    public boolean delete(Book book)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -85,7 +85,7 @@ public class BookDaoImpl {
         return true;
     }
 
-    public boolean update(Book book) {
+    public boolean update(Book book)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -97,7 +97,7 @@ public class BookDaoImpl {
         return true;
     }
 
-    public Book search(String id) {
+    public Book search(String id)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 

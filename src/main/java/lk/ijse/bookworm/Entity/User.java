@@ -26,4 +26,12 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Borrow> borrow;
+
+    public User(String id, String name, String address, String email, String phone) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.phone = phone;
+    }
 }

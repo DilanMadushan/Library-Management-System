@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,13 +18,21 @@ import java.util.List;
 public class Borrow {
     @Id
     private String borrowId;
-    private Date date;
+    private LocalDate date;
 
-    @ManyToMany
-    private List<Book> book;
+    @OneToMany(mappedBy = "borrow")
+    private List<BookDetails> bookDetails;
 
     @ManyToOne
     private User user;
 
+    public Borrow(String borrowId, LocalDate date, User user) {
+        this.borrowId = borrowId;
+        this. date= date;
+        this.user = user;
+    }
 
+    public Borrow(String borrowId) {
+        this.borrowId = borrowId;
+    }
 }

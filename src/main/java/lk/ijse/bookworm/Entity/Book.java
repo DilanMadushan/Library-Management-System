@@ -24,15 +24,19 @@ public class Book {
     @ManyToOne
     private Branch branch;
 
-    @ManyToMany(mappedBy = "book")
-    private List<Borrow> borrows;
+    @OneToMany(mappedBy = "book")
+    private List<BookDetails> bookDetails;
 
     public Book(String id, String title, String author, String genre, String status, Branch branch) {
         this.id = id;
         this.title = title;
         this.author = author;
-        Genre = genre;
+        this.Genre = genre;
         this.status = status;
         this.branch = branch;
+    }
+
+    public Book(String id) {
+        this.id = id;
     }
 }

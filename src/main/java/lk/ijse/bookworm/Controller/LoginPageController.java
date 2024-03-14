@@ -48,6 +48,7 @@ public class LoginPageController {
         String name = txtName.getText();
         String password = txtPassword.getText();
 
+
         if (name.isEmpty() || password.isEmpty()){
             new Alert(Alert.AlertType.ERROR,"fields are empty").show();
             return;

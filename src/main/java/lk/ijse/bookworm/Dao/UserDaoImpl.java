@@ -1,20 +1,33 @@
 package lk.ijse.bookworm.Dao;
 
 import lk.ijse.bookworm.Config.FactoryConfiguration;
-import lk.ijse.bookworm.Entity.Book;
+import lk.ijse.bookworm.Entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 
 import java.util.List;
 
-public class BookDaoImpl {
+public class UserDaoImpl {
+    public List<User> getAll() {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        NativeQuery nativeQuery = session.createNativeQuery("SELECT * FROM user ");
+        nativeQuery.addEntity(User.class);
+        List<User> users = nativeQuery.getResultList();
+
+        transaction.commit();
+        session.close();
+
+        return users;
+    }
 
     public String generateNextId() {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
-        NativeQuery<String> nativeQuery = session.createNativeQuery("SELECT id FROM book ORDER BY id DESC LIMIT 1");
+        NativeQuery<String> nativeQuery = session.createNativeQuery("SELECT id FROM user ORDER BY id DESC LIMIT 1");
         String id = nativeQuery.uniqueResult();
         transaction.commit();
         session.close();
@@ -28,85 +41,67 @@ public class BookDaoImpl {
 
     private String splitId(String currentId) {
         if(currentId != null) {
-            String[] strings = currentId.split("B0");
+            String[] strings = currentId.split("U0");
             int id = Integer.parseInt(strings[1]);
             id++;
             String ID = String.valueOf(id);
             int length = ID.length();
             if (length < 2){
-                return "B00"+id;
+                return "U00"+id;
             }else {
                 if (length < 3){
-                    return "B0"+id;
+                    return "U0"+id;
                 }else {
-                    return "B"+id;
+                    return "U"+id;
                 }
             }
         }
-        return "B001";
+        return "U001";
     }
 
-    public List<Book> getAll() {
+    public boolean save(User user) {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
-        NativeQuery nativeQuery = session.createNativeQuery("SELECT * FROM book ");
-        nativeQuery.addEntity(Book.class);
-        List<Book> books = nativeQuery.getResultList();
+        session.save(user);
 
         transaction.commit();
         session.close();
-
-        return books;
-
-    }
-
-    public boolean Save(Book book) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-
-        session.save(book);
-
-        transaction.commit();
-        session.close();
-
         return true;
     }
 
-    public boolean delete(Book book) {
+    public boolean delete(User user) {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
-        session.remove(book);
+        session.remove(user);
 
         transaction.commit();
         session.close();
+        return true;
 
+    }
+
+    public boolean update(User user) {
+        Session session = FactoryConfiguration.getInstance().getSession();
+        Transaction transaction = session.beginTransaction();
+
+        session.update(user);
+
+        transaction.commit();
+        session.close();
         return true;
     }
 
-    public boolean update(Book book) {
+    public User Search(String id) {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
-        session.update(book);
+        User user = session.get(User.class,id);
 
         transaction.commit();
         session.close();
 
-        return true;
-    }
-
-    public Book search(String id) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-
-        Book book = session.get(Book.class,id);
-
-        transaction.commit();
-        session.close();
-
-        return book;
-
+        return user;
     }
 }

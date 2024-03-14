@@ -17,6 +17,7 @@ public class AdminBoImpl{
     }
 
     public boolean check(AdminDto adminDto) {
+        System.out.println("cheak "+adminDto.getName());
         return adminDao.check(new Admin(adminDto.getName(),adminDto.getPassword(),new ArrayList<Branch>()));
     }
 

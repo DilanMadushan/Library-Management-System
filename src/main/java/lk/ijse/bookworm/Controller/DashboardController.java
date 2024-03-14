@@ -52,7 +52,7 @@ public class DashboardController {
 
     @FXML
     void borrowOnAction(ActionEvent event) throws IOException {
-        Parent rootNOde = FXMLLoader.load(getClass().getResource("/view/"));
+        Parent rootNOde = FXMLLoader.load(getClass().getResource("/view/borrowManage.fxml"));
         Scene scene = new Scene(rootNOde);
         Stage stage = (Stage) anchorPane.getScene().getWindow();
         stage.setScene(scene);

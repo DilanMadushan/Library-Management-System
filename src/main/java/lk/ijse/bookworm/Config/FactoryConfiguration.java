@@ -18,7 +18,8 @@ public class FactoryConfiguration {
                 .addAnnotatedClass(Branch.class)
                 .addAnnotatedClass(Book.class)
                 .addAnnotatedClass(Borrow.class)
-                .addAnnotatedClass(User.class);
+                .addAnnotatedClass(User.class)
+                .addAnnotatedClass(BookDetails.class);
         sessionFactory = configuration.buildSessionFactory();
     }
 

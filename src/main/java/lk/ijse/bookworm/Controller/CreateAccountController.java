@@ -66,7 +66,7 @@ public class CreateAccountController {
 
     @FXML
     void passwordOnAction(ActionEvent event) {
-
+        loginOnAction(event);
     }
 
     public void closeOnAction(MouseEvent mouseEvent) {

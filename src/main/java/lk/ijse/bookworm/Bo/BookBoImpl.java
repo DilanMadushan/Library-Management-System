@@ -66,4 +66,17 @@ public class BookBoImpl {
                 bookDto.getBranch()
         ));
     }
+
+    public BookDto searchBook(String id) throws Exception {
+        Book book = bookDao.search(id);
+
+        return new BookDto(
+                book.getId(),
+                book.getTitle(),
+                book.getAuthor(),
+                book.getGenre(),
+                book.getStatus(),
+                book.getBranch()
+        );
+    }
 }

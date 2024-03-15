@@ -23,6 +23,7 @@ import lk.ijse.bookworm.Dto.UserDto;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class MemberManageController {
 
@@ -111,27 +112,66 @@ public class MemberManageController {
 
     @FXML
     void addOnAction(ActionEvent event) {
-        String id = txtId.getText();
-        String name = txtName.getText();
-        String address = txtAddress.getText();
-        String email = txtEmail.getText();
-        String tel = txtTel.getText();
 
-        try{
-            boolean isSaved = userBo.saveUser(new UserDto(id,name,address,email,tel));
+        if (validateMember()) {
 
-            if (isSaved) {
-                new Alert(Alert.AlertType.CONFIRMATION,"Saved Successfully").show();
-                initialize();
-                clearFields();
-            }else{
-                new Alert(Alert.AlertType.ERROR,"Save Failed").show();
+            String id = txtId.getText();
+            String name = txtName.getText();
+            String address = txtAddress.getText();
+            String email = txtEmail.getText();
+            String tel = txtTel.getText();
+
+            try {
+                boolean isSaved = userBo.saveUser(new UserDto(id, name, address, email, tel));
+
+                if (isSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Saved Successfully").show();
+                    initialize();
+                    clearFields();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Save Failed").show();
+                }
+
+            } catch (Exception e) {
+
             }
-
-        }catch (Exception e){
-
         }
 
+    }
+
+    private boolean validateMember() {
+        String name = txtName.getText();
+        boolean nameMatch = Pattern.matches("[A-za-z\\\\s]{1,}",name);
+
+        if(!nameMatch){
+            new Alert(Alert.AlertType.ERROR,"invalid Name").show();
+            return false;
+        }
+
+        String address = txtAddress.getText();
+        boolean addMatch = Pattern.matches("[A-za-z\\\\s]{1,}",address);
+
+        if(!addMatch){
+            new Alert(Alert.AlertType.ERROR,"invalid Address").show();
+            return false;
+        }
+
+        String email = txtEmail.getText();
+        boolean emailMatch = Pattern.matches("[A-za-z\\\\s]{1,}",email);
+
+        if(!emailMatch){
+            new Alert(Alert.AlertType.ERROR,"invalid Email").show();
+            return false;
+        }
+
+        String tel = txtTel.getText();
+        boolean telMatch = Pattern.matches("[0-9]{10}",tel);
+
+        if(!telMatch){
+            new Alert(Alert.AlertType.ERROR,"invalid Tel").show();
+            return false;
+        }
+        return true;
     }
 
     private void clearFields() {
@@ -143,52 +183,60 @@ public class MemberManageController {
 
     @FXML
     void deleteOnAction(ActionEvent event) {
-        String id = txtId.getText();
-        String name = txtName.getText();
-        String address = txtAddress.getText();
-        String email = txtEmail.getText();
-        String tel = txtTel.getText();
 
-        try {
+        if (validateMember()) {
 
-            boolean isDelete = userBo.DeleteUser(new UserDto(id,name,address,email,tel));
+            String id = txtId.getText();
+            String name = txtName.getText();
+            String address = txtAddress.getText();
+            String email = txtEmail.getText();
+            String tel = txtTel.getText();
 
-            if (isDelete) {
-                new Alert(Alert.AlertType.CONFIRMATION,"delete Successfully").show();
-                initialize();
-                clearFields();
-            }else{
-                new Alert(Alert.AlertType.ERROR,"delete Failed").show();
+            try {
+
+                boolean isDelete = userBo.DeleteUser(new UserDto(id, name, address, email, tel));
+
+                if (isDelete) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "delete Successfully").show();
+                    initialize();
+                    clearFields();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "delete Failed").show();
+                }
+
+            } catch (Exception e) {
+
             }
-
-        }catch (Exception e){
-
         }
 
     }
 
     @FXML
     void updateOnAction(ActionEvent event) {
-        String id = txtId.getText();
-        String name = txtName.getText();
-        String address = txtAddress.getText();
-        String email = txtEmail.getText();
-        String tel = txtTel.getText();
 
-        try{
+        if (validateMember()) {
 
-            boolean isDelete = userBo.updateUser(new UserDto(id,name,address,email,tel));
+            String id = txtId.getText();
+            String name = txtName.getText();
+            String address = txtAddress.getText();
+            String email = txtEmail.getText();
+            String tel = txtTel.getText();
 
-            if (isDelete) {
-                new Alert(Alert.AlertType.CONFIRMATION,"update Successfully").show();
-                initialize();
-                clearFields();
-            }else{
-                new Alert(Alert.AlertType.ERROR,"update Failed").show();
+            try {
+
+                boolean isDelete = userBo.updateUser(new UserDto(id, name, address, email, tel));
+
+                if (isDelete) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "update Successfully").show();
+                    initialize();
+                    clearFields();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "update Failed").show();
+                }
+
+            } catch (Exception e) {
+
             }
-
-        }catch (Exception e){
-
         }
 
     }

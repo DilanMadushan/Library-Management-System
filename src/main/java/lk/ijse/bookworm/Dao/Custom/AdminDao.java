@@ -7,7 +7,7 @@ public interface AdminDao extends CrudDao<Admin> {
 //
 //    List getAll()throws Exception;
 //
-//    boolean check(Admin admin)throws Exception;
+    boolean check(Admin admin)throws Exception;
 //
 //
 //    String generateNextId()throws Exception;

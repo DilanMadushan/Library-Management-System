@@ -28,6 +28,7 @@ import lk.ijse.bookworm.Entity.Admin;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class branchManageController {
 
@@ -134,81 +135,126 @@ public class branchManageController {
 
     @FXML
     void addOnAction(ActionEvent event) {
-        String id = txtId.getText();
+
+        if(validateBranch()) {
+
+            String id = txtId.getText();
+            String name = txtName.getText();
+            String location = txtLocation.getText();
+            String address = txtAddress.getText();
+            String adminId = (String) cmbAdmin.getValue();
+
+            admin.setId(adminId);
+
+            try {
+
+                boolean isSaved = branchBo.save(new BranchDto(id, name, location, address, admin));
+
+                if (isSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Save SuccessFully").show();
+                    initialize();
+                    clearFields();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Save Failed").show();
+                }
+
+            } catch (Exception e) {
+                new Alert(Alert.AlertType.ERROR, "Save Failed").show();
+            }
+        }
+
+    }
+
+    private boolean validateBranch() {
         String name = txtName.getText();
+
+        boolean nameMatch = Pattern.matches("[A-za-z\\\\s]{1,}",name);
+        if (!nameMatch) {
+            new Alert(Alert.AlertType.ERROR,"invalid Name").show();
+            return false;
+        }
+
         String location = txtLocation.getText();
+
+        boolean locMatch = Pattern.matches("[A-za-z\\\\s]{1,}",location);
+        if (!locMatch) {
+            new Alert(Alert.AlertType.ERROR,"invalid Location").show();
+            return false;
+        }
+
         String address = txtAddress.getText();
+
+        boolean addressMatch = Pattern.matches("[A-za-z\\\\s]{1,}",address);
+        if (!addressMatch) {
+            new Alert(Alert.AlertType.ERROR,"invalid Address").show();
+            return false;
+        }
+
         String adminId = (String) cmbAdmin.getValue();
 
-        admin.setId(adminId);
-
-        try{
-
-            boolean isSaved = branchBo.save(new BranchDto(id,name,location,address,admin));
-
-        if (isSaved) {
-            new Alert(Alert.AlertType.CONFIRMATION,"Save SuccessFully").show();
-            initialize();
-            clearFields();
-        }else{
-            new Alert(Alert.AlertType.ERROR,"Save Failed").show();
+        if (adminId==null) {
+            new Alert(Alert.AlertType.ERROR,"adminId is Null").show();
+            return false;
         }
-
-        } catch (Exception e){
-            new Alert(Alert.AlertType.ERROR,"Save Failed").show();
-        }
+        return true;
 
     }
 
     @FXML
     void deleteOnAction(ActionEvent event) {
-        String id = txtId.getText();
-        String name = txtName.getText();
-        String location = txtLocation.getText();
-        String address = txtAddress.getText();
-        String adminId = (String) cmbAdmin.getValue();
+        if(validateBranch()) {
+            String id = txtId.getText();
+            String name = txtName.getText();
+            String location = txtLocation.getText();
+            String address = txtAddress.getText();
+            String adminId = (String) cmbAdmin.getValue();
 
-        admin.setId(adminId);
+            admin.setId(adminId);
 
-        try {
+            try {
 
-            boolean isRemoved = branchBo.deleteBranch(new BranchDto(id, name, location, address, admin));
+                boolean isRemoved = branchBo.deleteBranch(new BranchDto(id, name, location, address, admin));
 
-            if (isRemoved) {
-                new Alert(Alert.AlertType.CONFIRMATION, "delete Successfully").show();
-                initialize();
-                clearFields();
-            } else {
+                if (isRemoved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "delete Successfully").show();
+                    initialize();
+                    clearFields();
+                } else {
+                    new Alert(Alert.AlertType.CONFIRMATION, "delete Failed").show();
+                }
+            } catch (Exception e) {
                 new Alert(Alert.AlertType.CONFIRMATION, "delete Failed").show();
             }
-        }catch (Exception e){
-            new Alert(Alert.AlertType.CONFIRMATION, "delete Failed").show();
         }
     }
 
     @FXML
     void updateOnAction(ActionEvent event) {
-        String id = txtId.getText();
-        String name = txtName.getText();
-        String location = txtLocation.getText();
-        String address = txtAddress.getText();
-        String adminId = (String) cmbAdmin.getValue();
 
-        admin.setId(adminId);
+        if(validateBranch()) {
 
-        try {
+            String id = txtId.getText();
+            String name = txtName.getText();
+            String location = txtLocation.getText();
+            String address = txtAddress.getText();
+            String adminId = (String) cmbAdmin.getValue();
 
-            boolean isRemoved = branchBo.updateBranch(new BranchDto(id, name, location, address, admin));
+            admin.setId(adminId);
 
-            if (isRemoved) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Update Successfully").show();
-                initialize();
-                clearFields();
-            } else {
+            try {
+
+                boolean isRemoved = branchBo.updateBranch(new BranchDto(id, name, location, address, admin));
+
+                if (isRemoved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Update Successfully").show();
+                    initialize();
+                    clearFields();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Update Failed").show();
+                }
+            } catch (Exception e) {
                 new Alert(Alert.AlertType.ERROR, "Update Failed").show();
             }
-        }catch (Exception e){
-            new Alert(Alert.AlertType.ERROR, "Update Failed").show();
         }
     }
 

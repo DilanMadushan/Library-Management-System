@@ -8,12 +8,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import lk.ijse.bookworm.Bo.BoFactory;
+import lk.ijse.bookworm.Bo.Custom.QueryBo;
 import lk.ijse.bookworm.Bo.Custom.UserBo;
 import lk.ijse.bookworm.Bo.Custom.impl.QueryBoImpl;
 import lk.ijse.bookworm.Dto.Tm.TransactionTm;
@@ -52,7 +54,7 @@ public class HistoryManageController {
 
     UserBo userBo = (UserBo) BoFactory.getBoFactory().getBo(BoFactory.BOTypes.USER);
 
-    QueryBoImpl queryBo = new QueryBoImpl();
+    QueryBo queryBo = (QueryBo) BoFactory.getBoFactory().getBo(BoFactory.BOTypes.QUERY);
 
     public void initialize(){
         setUser();
@@ -107,6 +109,10 @@ public class HistoryManageController {
     @FXML
     void userOnAction(ActionEvent event) {
         String user = (String) cmbUserId.getValue();
+
+        if (user==null) {
+            new Alert(Alert.AlertType.ERROR, "user is Empty").show();
+        }
 
         try{
 

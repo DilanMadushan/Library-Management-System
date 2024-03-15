@@ -1,10 +1,11 @@
 package lk.ijse.bookworm.Dao.Custom;
 
+import lk.ijse.bookworm.Dao.SuperDAO;
 import lk.ijse.bookworm.Entity.Book;
 
 import java.util.List;
 
-public interface CrudDao <T> {
+public interface CrudDao <T> extends SuperDAO {
     String generateNextId()throws Exception;
 
     List<T> getAll()throws Exception;

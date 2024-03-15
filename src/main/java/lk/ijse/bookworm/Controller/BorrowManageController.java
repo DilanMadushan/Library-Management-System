@@ -185,50 +185,88 @@ public class BorrowManageController {
     @FXML
     void addOnAction(ActionEvent event) {
 
+        if (ValidateBorrow()) {
+
+            String memberId = (String) cmbMember.getValue();
+            String bookId = (String) cmbBook.getValue();
+            String status = (String) cmbStstus.getValue();
+            LocalDate borrowDate = borrowdDate.getValue();
+            LocalDate returndDate = returnDate.getValue();
+
+            try {
+                if (bookBo.searchBook(bookId).getStatus().equals("Unavailable") && status.equals("Borrow")) {
+                    new Alert(Alert.AlertType.ERROR, "Book Unavailable").show();
+                    return;
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
+            BorrowTm borrowTms = new BorrowTm(memberId, bookId, status, borrowDate, returndDate);
+
+            if (borrowTmList.size() >= 3) {
+                new Alert(Alert.AlertType.INFORMATION, "Out of limit").show();
+                return;
+            }
+
+            int index = 0;
+
+            for (BorrowTm borrowTm : borrowTmList) {
+                if (borrowTm.getBookId().equals(bookId) && borrowTm.getMemberId().equals(memberId)) {
+                    borrowTmList.set(index, borrowTms);
+                    return;
+                }
+                index++;
+            }
+
+            borrowTmList.add(new BorrowTm(
+                    memberId,
+                    bookId,
+                    status,
+                    borrowDate,
+                    returndDate
+            ));
+
+            tblBorrow.setItems(borrowTmList);
+
+            genarateNext();
+        }
+
+    }
+
+    private boolean ValidateBorrow() {
         String memberId = (String) cmbMember.getValue();
+
+        if(memberId == null){
+            new Alert(Alert.AlertType.ERROR,"member is empty").show();
+            return false;
+        }
+
         String bookId = (String) cmbBook.getValue();
+        if(bookId == null){
+            new Alert(Alert.AlertType.ERROR,"Book is empty").show();
+            return false;
+        }
+
         String status = (String) cmbStstus.getValue();
+
+        if(status == null){
+            new Alert(Alert.AlertType.ERROR,"status is empty").show();
+            return false;
+        }
+
         LocalDate borrowDate = borrowdDate.getValue();
+        if(borrowDate == null){
+            new Alert(Alert.AlertType.ERROR,"borrowDate is empty").show();
+            return false;
+        }
+
         LocalDate returndDate = returnDate.getValue();
-
-        try {
-            if(bookBo.searchBook(bookId).getStatus().equals("Unavailable") && status.equals("Borrow")){
-                new Alert(Alert.AlertType.ERROR,"Book Unavailable").show();
-                return;
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        if(returndDate == null){
+            new Alert(Alert.AlertType.ERROR,"returnDate is empty").show();
+            return false;
         }
-
-        BorrowTm borrowTms = new BorrowTm(memberId,bookId,status,borrowDate,returndDate);
-
-        if(borrowTmList.size()>=3){
-            new Alert(Alert.AlertType.INFORMATION,"Out of limit").show();
-            return;
-        }
-
-        int index = 0;
-
-        for(BorrowTm borrowTm : borrowTmList){
-            if(borrowTm.getBookId().equals(bookId) && borrowTm.getMemberId().equals(memberId)){
-                borrowTmList.set(index,borrowTms);
-                return;
-            }
-            index++;
-        }
-
-        borrowTmList.add(new BorrowTm(
-                memberId,
-                bookId,
-                status,
-                borrowDate,
-                returndDate
-        ));
-
-        tblBorrow.setItems(borrowTmList);
-
-        genarateNext();
-
+        return true;
     }
 
     private void genarateNext() {
@@ -325,7 +363,6 @@ public class BorrowManageController {
             } catch (Exception e) {
                 transaction.rollback();
                 throw new RuntimeException(e);
-
             }finally {
                 session.close();
             }

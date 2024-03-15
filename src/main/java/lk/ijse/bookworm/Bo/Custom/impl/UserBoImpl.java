@@ -1,7 +1,9 @@
 package lk.ijse.bookworm.Bo.Custom.impl;
 
 import lk.ijse.bookworm.Bo.Custom.UserBo;
+import lk.ijse.bookworm.Dao.Custom.UserDao;
 import lk.ijse.bookworm.Dao.Custom.impl.UserDaoImpl;
+import lk.ijse.bookworm.Dao.DAOFactory;
 import lk.ijse.bookworm.Dto.UserDto;
 import lk.ijse.bookworm.Entity.User;
 
@@ -10,7 +12,7 @@ import java.util.List;
 
 public class UserBoImpl implements UserBo {
 
-    UserDaoImpl userDao = new UserDaoImpl();
+    UserDao userDao = (UserDao) DAOFactory.getDaoFactory().getDAO(DAOFactory.DTOTypes.USER);
     @Override
     public List<UserDto> getAllUser() throws Exception {
         List<User> users = userDao.getAll();

@@ -28,6 +28,7 @@ import lk.ijse.bookworm.Entity.Branch;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class BookManageController {
 
@@ -152,84 +153,137 @@ public class BookManageController {
 
     @FXML
     void addOnAction(ActionEvent event) {
-        String id = txtId.getText();
-        String title = txtTitle.getText();
-        String author = txtAuthor.getText();
-        String Genre = txtGenare.getText();
-        String Status = (String) cmbStatus.getValue();
-        String Branch = (String) cmbBranch.getValue();
 
-        System.out.println(Status);
+        if(validation()) {
 
-        branch.setId(Branch);
-        try{
-            boolean isSaved = bookBo.saveBook(new BookDto(id,title,author,Genre,Status,branch));
-            if (isSaved) {
-                new Alert(Alert.AlertType.CONFIRMATION,"Save Successfully").show();
-                initialize();
-                clearFeilds();
-            }else{
-                new Alert(Alert.AlertType.ERROR,"Save Failed").show();
+            String id = txtId.getText();
+            String title = txtTitle.getText();
+            String author = txtAuthor.getText();
+            String Genre = txtGenare.getText();
+            String Status = (String) cmbStatus.getValue();
+            String Branch = (String) cmbBranch.getValue();
+
+            System.out.println(Status);
+
+            branch.setId(Branch);
+            try {
+                boolean isSaved = bookBo.saveBook(new BookDto(id, title, author, Genre, Status, branch));
+                if (isSaved) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Save Successfully").show();
+                    initialize();
+                    clearFeilds();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Save Failed").show();
+                }
+            } catch (Exception e) {
+
             }
-        }catch (Exception e){
-
         }
 
 
     }
 
+    private boolean validation() {
+
+        String title = txtTitle.getText();
+        boolean idMatch = Pattern.matches("[A-za-z\\\\s]{1,}",title);
+
+        if(!idMatch){
+            new Alert(Alert.AlertType.ERROR,"invalid Title").show();
+            return false;
+        }
+
+        String author = txtAuthor.getText();
+        boolean authorMatch = Pattern.matches("[A-za-z\\\\s]{1,}",author);
+
+        if(!authorMatch){
+            new Alert(Alert.AlertType.ERROR,"invalid Author").show();
+            return false;
+        }
+
+        String Genre = txtGenare.getText();
+        boolean genreMatch = Pattern.matches("[A-za-z\\\\s]{1,}",Genre);
+
+        if(!genreMatch){
+            new Alert(Alert.AlertType.ERROR,"invalid Genare").show();
+            return false;
+        }
+
+        String Status = (String) cmbStatus.getValue();
+        if(Status==null){
+            new Alert(Alert.AlertType.ERROR,"status is empty").show();
+            return false;
+        }
+
+        String Branch = (String) cmbBranch.getValue();
+        if(Branch==null){
+            new Alert(Alert.AlertType.ERROR,"Branch is empty").show();
+            return false;
+        }
+
+        return true;
+    }
+
     @FXML
     void deleteOnAction(ActionEvent event) {
-        String id = txtId.getText();
-        String title = txtTitle.getText();
-        String author = txtAuthor.getText();
-        String Genre = txtGenare.getText();
-        String Status = (String) cmbStatus.getValue();
-        String Branch = (String) cmbBranch.getValue();
 
-        branch.setId(Branch);
+        if(validation()) {
 
-        try{
-            boolean idDelete = bookBo.deleteBook(new BookDto(id,title,author,Genre,Status,branch));
+            String id = txtId.getText();
+            String title = txtTitle.getText();
+            String author = txtAuthor.getText();
+            String Genre = txtGenare.getText();
+            String Status = (String) cmbStatus.getValue();
+            String Branch = (String) cmbBranch.getValue();
 
-            if (idDelete) {
-                new Alert(Alert.AlertType.CONFIRMATION,"Delete Successfully").show();
-                initialize();
-                clearFeilds();
-            }else{
-                new Alert(Alert.AlertType.ERROR,"Delete Failed").show();
+            branch.setId(Branch);
+
+            try {
+                boolean idDelete = bookBo.deleteBook(new BookDto(id, title, author, Genre, Status, branch));
+
+                if (idDelete) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Delete Successfully").show();
+                    initialize();
+                    clearFeilds();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Delete Failed").show();
+                }
+
+            } catch (Exception e) {
+
             }
-
-        }catch (Exception e){
-
         }
 
     }
 
     @FXML
     void updateOnAction(ActionEvent event) {
-        String id = txtId.getText();
-        String title = txtTitle.getText();
-        String author = txtAuthor.getText();
-        String Genre = txtGenare.getText();
-        String Status = (String) cmbStatus.getValue();
-        String Branch = (String) cmbBranch.getValue();
 
-        branch.setId(Branch);
+        if(validation()) {
 
-        try{
-            boolean isUpdate = bookBo.updateBook(new BookDto(id,title,author,Genre,Status,branch));
+            String id = txtId.getText();
+            String title = txtTitle.getText();
+            String author = txtAuthor.getText();
+            String Genre = txtGenare.getText();
+            String Status = (String) cmbStatus.getValue();
+            String Branch = (String) cmbBranch.getValue();
 
-            if (isUpdate) {
-                new Alert(Alert.AlertType.CONFIRMATION,"Update Successfully").show();
-                initialize();
-                clearFeilds();
-            }else{
-                new Alert(Alert.AlertType.ERROR,"Update Failed").show();
+            branch.setId(Branch);
+
+            try {
+                boolean isUpdate = bookBo.updateBook(new BookDto(id, title, author, Genre, Status, branch));
+
+                if (isUpdate) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Update Successfully").show();
+                    initialize();
+                    clearFeilds();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Update Failed").show();
+                }
+
+            } catch (Exception e) {
+
             }
-
-        }catch (Exception e){
-
         }
 
 

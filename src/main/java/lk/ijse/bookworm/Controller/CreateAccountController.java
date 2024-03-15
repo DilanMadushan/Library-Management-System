@@ -48,8 +48,9 @@ public class CreateAccountController {
 
         System.out.println(name);
 
-        if(name.equals("") && password.equals("")){
+        if(name.equals("") || password.equals("")){
             new Alert(Alert.AlertType.ERROR,"fields are empty").show();
+            return;
         }
 
         try{

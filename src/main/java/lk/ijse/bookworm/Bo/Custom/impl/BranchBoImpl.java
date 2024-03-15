@@ -1,8 +1,10 @@
 package lk.ijse.bookworm.Bo.Custom.impl;
 
 import lk.ijse.bookworm.Bo.Custom.BranchBo;
+import lk.ijse.bookworm.Dao.Custom.BranchDao;
 import lk.ijse.bookworm.Dao.Custom.impl.AdminDaoImpl;
 import lk.ijse.bookworm.Dao.Custom.impl.BranchDaoImpl;
+import lk.ijse.bookworm.Dao.DAOFactory;
 import lk.ijse.bookworm.Dto.BranchDto;
 import lk.ijse.bookworm.Entity.Book;
 import lk.ijse.bookworm.Entity.Branch;
@@ -11,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BranchBoImpl implements BranchBo {
-    BranchDaoImpl branchDao = new BranchDaoImpl();
-    AdminDaoImpl adminDao = new AdminDaoImpl();
+    BranchDao branchDao = (BranchDao) DAOFactory.getDaoFactory().getDAO(DAOFactory.DTOTypes.BRANCH);
+
     @Override
     public String generateNextId() throws Exception{
         return branchDao.generateNextId();

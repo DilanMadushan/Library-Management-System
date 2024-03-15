@@ -1,7 +1,9 @@
 package lk.ijse.bookworm.Bo.Custom.impl;
 
 import lk.ijse.bookworm.Bo.Custom.BookBo;
+import lk.ijse.bookworm.Dao.Custom.BookDao;
 import lk.ijse.bookworm.Dao.Custom.impl.BookDaoImpl;
+import lk.ijse.bookworm.Dao.DAOFactory;
 import lk.ijse.bookworm.Dto.BookDto;
 import lk.ijse.bookworm.Entity.Book;
 
@@ -10,7 +12,7 @@ import java.util.List;
 
 public class BookBoImpl implements BookBo {
 
-    BookDaoImpl bookDao = new BookDaoImpl();
+    BookDao bookDao = (BookDao) DAOFactory.getDaoFactory().getDAO(DAOFactory.DTOTypes.BOOK);
     @Override
     public String generateNextBookId() throws Exception {
         return bookDao.generateNextId();

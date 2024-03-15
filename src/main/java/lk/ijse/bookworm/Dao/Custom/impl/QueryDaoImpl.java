@@ -1,6 +1,7 @@
 package lk.ijse.bookworm.Dao.Custom.impl;
 
 import lk.ijse.bookworm.Config.FactoryConfiguration;
+import lk.ijse.bookworm.Dao.Custom.QueryDao;
 import lk.ijse.bookworm.Entity.Branch;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -9,7 +10,7 @@ import org.hibernate.query.NativeQuery;
 import java.util.List;
 import java.util.Objects;
 
-public class QueryDaoImpl {
+public class QueryDaoImpl implements QueryDao {
     public List<Object[]> getTransaction(String user)throws Exception {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();

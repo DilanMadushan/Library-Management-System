@@ -1,7 +1,7 @@
 package lk.ijse.bookworm.Bo.Custom.impl;
 
 import lk.ijse.bookworm.Bo.Custom.BookBo;
-import lk.ijse.bookworm.Dao.BookDaoImpl;
+import lk.ijse.bookworm.Dao.Custom.impl.BookDaoImpl;
 import lk.ijse.bookworm.Dto.BookDto;
 import lk.ijse.bookworm.Entity.Book;
 
@@ -36,7 +36,7 @@ public class BookBoImpl implements BookBo {
 
     @Override
     public boolean saveBook(BookDto bookDto) throws Exception {
-        return bookDao.Save(new Book(
+        return bookDao.save(new Book(
                 bookDto.getId(),
                 bookDto.getTitle(),
                 bookDto.getAuthor(),

@@ -104,12 +104,6 @@ public class BorrowManageController {
         setStatus();
         setCellvalues();
         generateBorrowId();
-        //generateOrderDetailId();
-
-
-        for (int i = 0; i < 20; i++) {
-            System.out.println(generateOrderDetailId());
-        }
     }
 
     private String generateOrderDetailId() {
@@ -456,6 +450,17 @@ public class BorrowManageController {
 
         }
 
+
+    }
+
+    public void deleteOnAction(ActionEvent actionEvent) {
+        int focusedIndex = tblBorrow.getSelectionModel().getSelectedIndex();
+
+        borrowTmList.remove(focusedIndex);
+        tblBorrow.refresh();
+    }
+
+    public void tblOnAction(MouseEvent mouseEvent) {
 
     }
 }

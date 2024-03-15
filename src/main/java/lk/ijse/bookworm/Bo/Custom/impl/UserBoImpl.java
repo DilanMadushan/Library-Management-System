@@ -1,7 +1,7 @@
 package lk.ijse.bookworm.Bo.Custom.impl;
 
 import lk.ijse.bookworm.Bo.Custom.UserBo;
-import lk.ijse.bookworm.Dao.UserDaoImpl;
+import lk.ijse.bookworm.Dao.Custom.impl.UserDaoImpl;
 import lk.ijse.bookworm.Dto.UserDto;
 import lk.ijse.bookworm.Entity.User;
 
@@ -68,7 +68,7 @@ public class UserBoImpl implements UserBo {
 
     @Override
     public UserDto SearchUser(String id) throws Exception {
-        User user = userDao.Search(id);
+        User user = userDao.search(id);
 
         return new UserDto(
                 user.getId(),

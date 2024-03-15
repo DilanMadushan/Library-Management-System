@@ -1,18 +1,16 @@
-package lk.ijse.bookworm.Dao;
+package lk.ijse.bookworm.Dao.Custom.impl;
 
 import lk.ijse.bookworm.Config.FactoryConfiguration;
+import lk.ijse.bookworm.Dao.Custom.AdminDao;
 import lk.ijse.bookworm.Entity.Admin;
-import lk.ijse.bookworm.Entity.Branch;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
-import org.hibernate.query.Query;
 
-import java.sql.ResultSet;
 import java.util.List;
 
-public class AdminDaoImpl {
-
+public class AdminDaoImpl implements AdminDao {
+    @Override
     public boolean save(Admin admin)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -25,7 +23,22 @@ public class AdminDaoImpl {
         return true;
     }
 
-    public List getAll()throws Exception{
+    @Override
+    public boolean delete(Admin book) throws Exception {
+        return false;
+    }
+
+    @Override
+    public boolean update(Admin book) throws Exception {
+        return false;
+    }
+
+    @Override
+    public Admin search(String id) throws Exception {
+        return null;
+    }
+    @Override
+    public List<Admin> getAll()throws Exception{
 
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -42,7 +55,6 @@ public class AdminDaoImpl {
 
         return admins;
     }
-
     public boolean check(Admin admin)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -65,6 +77,7 @@ public class AdminDaoImpl {
     }
 
 
+    @Override
     public String generateNextId()throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();

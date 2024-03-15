@@ -1,8 +1,7 @@
-package lk.ijse.bookworm.Dao;
+package lk.ijse.bookworm.Dao.Custom.impl;
 
 import lk.ijse.bookworm.Config.FactoryConfiguration;
-import lk.ijse.bookworm.Dto.BranchDto;
-import lk.ijse.bookworm.Entity.Admin;
+import lk.ijse.bookworm.Dao.Custom.BranchDao;
 import lk.ijse.bookworm.Entity.Branch;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -10,9 +9,10 @@ import org.hibernate.query.NativeQuery;
 
 import java.util.List;
 
-public class BranchDaoImpl {
+public class BranchDaoImpl implements BranchDao {
 
-    public String genatareNextId()throws Exception {
+    @Override
+    public String generateNextId()throws Exception {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -48,6 +48,7 @@ public class BranchDaoImpl {
         return "BR001";
     }
 
+    @Override
     public List<Branch> getAll()throws Exception {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -62,7 +63,7 @@ public class BranchDaoImpl {
 
         return branches;
     }
-
+    @Override
     public boolean save(Branch branch)throws Exception {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -74,7 +75,7 @@ public class BranchDaoImpl {
 
         return true;
     }
-
+    @Override
     public boolean delete(Branch branch)throws Exception {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -86,7 +87,7 @@ public class BranchDaoImpl {
 
         return true;
     }
-
+    @Override
     public boolean update(Branch branch)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -97,5 +98,10 @@ public class BranchDaoImpl {
         session.close();
 
         return true;
+    }
+
+    @Override
+    public Branch search(String id) throws Exception {
+        return null;
     }
 }

@@ -1,6 +1,7 @@
-package lk.ijse.bookworm.Dao;
+package lk.ijse.bookworm.Dao.Custom.impl;
 
 import lk.ijse.bookworm.Config.FactoryConfiguration;
+import lk.ijse.bookworm.Dao.Custom.BookDao;
 import lk.ijse.bookworm.Entity.Book;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -8,8 +9,8 @@ import org.hibernate.query.NativeQuery;
 
 import java.util.List;
 
-public class BookDaoImpl {
-
+public class BookDaoImpl implements BookDao {
+    @Override
     public String generateNextId()throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -46,6 +47,7 @@ public class BookDaoImpl {
         return "B001";
     }
 
+    @Override
     public List<Book> getAll()throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -60,8 +62,8 @@ public class BookDaoImpl {
         return books;
 
     }
-
-    public boolean Save(Book book)throws Exception{
+    @Override
+    public boolean save(Book book)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -72,7 +74,7 @@ public class BookDaoImpl {
 
         return true;
     }
-
+    @Override
     public boolean delete(Book book)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -84,7 +86,7 @@ public class BookDaoImpl {
 
         return true;
     }
-
+    @Override
     public boolean update(Book book)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -96,7 +98,7 @@ public class BookDaoImpl {
 
         return true;
     }
-
+    @Override
     public Book search(String id)throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();

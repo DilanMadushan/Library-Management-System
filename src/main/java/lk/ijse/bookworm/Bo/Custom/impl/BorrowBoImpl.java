@@ -1,7 +1,7 @@
 package lk.ijse.bookworm.Bo.Custom.impl;
 
 import lk.ijse.bookworm.Bo.Custom.BorrowBo;
-import lk.ijse.bookworm.Dao.BorrowDaOImpl;
+import lk.ijse.bookworm.Dao.Custom.impl.BorrowDaOImpl;
 
 public class BorrowBoImpl implements BorrowBo {
 
@@ -13,6 +13,6 @@ public class BorrowBoImpl implements BorrowBo {
     }
     @Override
     public String genarateNextBorrowId() throws Exception {
-        return borrowDaO.generateNextValue();
+        return borrowDaO.generateNextId();
     }
 }

@@ -1,4 +1,4 @@
 package lk.ijse.bookworm.Dao;
 
-public class BookDetailsDao {
+public class BOFactory {
 }

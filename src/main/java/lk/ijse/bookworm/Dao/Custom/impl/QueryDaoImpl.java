@@ -1,4 +1,4 @@
-package lk.ijse.bookworm.Dao;
+package lk.ijse.bookworm.Dao.Custom.impl;
 
 import lk.ijse.bookworm.Config.FactoryConfiguration;
 import lk.ijse.bookworm.Entity.Branch;

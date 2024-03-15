@@ -1,7 +1,7 @@
 package lk.ijse.bookworm.Bo.Custom.impl;
 
 import lk.ijse.bookworm.Bo.Custom.AdminBo;
-import lk.ijse.bookworm.Dao.AdminDaoImpl;
+import lk.ijse.bookworm.Dao.Custom.impl.AdminDaoImpl;
 import lk.ijse.bookworm.Dto.AdminDto;
 import lk.ijse.bookworm.Entity.Admin;
 import lk.ijse.bookworm.Entity.Branch;

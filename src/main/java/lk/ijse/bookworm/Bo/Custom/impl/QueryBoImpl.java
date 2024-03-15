@@ -1,15 +1,12 @@
 package lk.ijse.bookworm.Bo.Custom.impl;
 
-import javafx.collections.ObservableList;
-import lk.ijse.bookworm.Dao.QueryDaoImpl;
+import lk.ijse.bookworm.Dao.Custom.impl.QueryDaoImpl;
 import lk.ijse.bookworm.Dto.TimeOutDto;
 import lk.ijse.bookworm.Dto.TransactionDto;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 
 public class QueryBoImpl {

@@ -1,12 +1,17 @@
-package lk.ijse.bookworm.Dao;
+package lk.ijse.bookworm.Dao.Custom.impl;
 
 import lk.ijse.bookworm.Config.FactoryConfiguration;
+import lk.ijse.bookworm.Dao.Custom.BorrowDao;
+import lk.ijse.bookworm.Entity.Borrow;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.NativeQuery;
 
-public class BorrowDaOImpl {
-    public String generateNextValue() throws Exception{
+import java.util.List;
+
+public class BorrowDaOImpl  implements BorrowDao {
+    @Override
+    public String generateNextId() throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
@@ -76,5 +81,31 @@ public class BorrowDaOImpl {
             }
         }
         return "OD001";
+    }
+
+
+    @Override
+    public List<Borrow> getAll() throws Exception {
+        return null;
+    }
+
+    @Override
+    public boolean save(Borrow book) throws Exception {
+        return false;
+    }
+
+    @Override
+    public boolean delete(Borrow book) throws Exception {
+        return false;
+    }
+
+    @Override
+    public boolean update(Borrow book) throws Exception {
+        return false;
+    }
+
+    @Override
+    public Borrow search(String id) throws Exception {
+        return null;
     }
 }

@@ -1,6 +1,7 @@
-package lk.ijse.bookworm.Dao;
+package lk.ijse.bookworm.Dao.Custom.impl;
 
 import lk.ijse.bookworm.Config.FactoryConfiguration;
+import lk.ijse.bookworm.Dao.Custom.UserDao;
 import lk.ijse.bookworm.Entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -8,7 +9,7 @@ import org.hibernate.query.NativeQuery;
 
 import java.util.List;
 
-public class UserDaoImpl {
+public class UserDaoImpl implements UserDao {
     public List<User> getAll() throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -93,7 +94,8 @@ public class UserDaoImpl {
         return true;
     }
 
-    public User Search(String id)throws Exception {
+    @Override
+    public User search(String id)throws Exception {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 

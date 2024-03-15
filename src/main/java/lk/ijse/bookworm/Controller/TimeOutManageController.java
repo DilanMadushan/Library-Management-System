@@ -43,19 +43,24 @@ public class TimeOutManageController {
     }
 
     private void setTimeOutDetails() {
-        List<TimeOutDto> dtoList = queryBo.setAllTimeOut();
-        ObservableList<TimeOutTm> tm = FXCollections.observableArrayList();
+        try{
+            List<TimeOutDto> dtoList = queryBo.setAllTimeOut();
+            ObservableList<TimeOutTm> tm = FXCollections.observableArrayList();
 
-        for(TimeOutDto dto :dtoList){
-            tm.add(new TimeOutTm(
-                    dto.getId(),
-                    dto.getName(),
-                    dto.getBookId(),
-                    dto.getBorrowDate(),
-                    dto.getReturnDate()
-            ));
+            for(TimeOutDto dto :dtoList){
+                tm.add(new TimeOutTm(
+                        dto.getId(),
+                        dto.getName(),
+                        dto.getBookId(),
+                        dto.getBorrowDate(),
+                        dto.getReturnDate()
+                ));
+            }
+            tblTimeOut.setItems(tm);
+
+        }catch (Exception e){
+
         }
-        tblTimeOut.setItems(tm);
     }
 
     private void setCellValues() {

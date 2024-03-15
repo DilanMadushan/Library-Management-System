@@ -157,7 +157,7 @@ public class MemberManageController {
         }
 
         String email = txtEmail.getText();
-        boolean emailMatch = Pattern.matches("[A-za-z\\\\s]{1,}",email);
+        boolean emailMatch = Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$",email);
 
         if(!emailMatch){
             new Alert(Alert.AlertType.ERROR,"invalid Email").show();

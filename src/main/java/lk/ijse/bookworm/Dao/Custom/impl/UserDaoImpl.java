@@ -10,6 +10,7 @@ import org.hibernate.query.NativeQuery;
 import java.util.List;
 
 public class UserDaoImpl implements UserDao {
+    @Override
     public List<User> getAll() throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -23,7 +24,7 @@ public class UserDaoImpl implements UserDao {
 
         return users;
     }
-
+    @Override
     public String generateNextId() throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -59,7 +60,7 @@ public class UserDaoImpl implements UserDao {
         }
         return "U001";
     }
-
+    @Override
     public boolean save(User user) throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -71,6 +72,7 @@ public class UserDaoImpl implements UserDao {
         return true;
     }
 
+    @Override
     public boolean delete(User user) throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -82,7 +84,7 @@ public class UserDaoImpl implements UserDao {
         return true;
 
     }
-
+    @Override
     public boolean update(User user)throws Exception {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();

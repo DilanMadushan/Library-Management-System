@@ -36,7 +36,7 @@ public class QueryBoImpl implements QueryBo {
 
     }
 
-    public List<TimeOutDto> setAllTimeOut() {
+    public List<TimeOutDto> setAllTimeOut() throws Exception {
         List<Object[]> objects = queryDao.getAllTimeOut();
 
         ArrayList<TimeOutDto> trans = new ArrayList<>();

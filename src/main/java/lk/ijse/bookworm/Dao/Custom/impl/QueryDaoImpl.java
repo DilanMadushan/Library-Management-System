@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class QueryDaoImpl implements QueryDao {
+    @Override
     public List<Object[]> getTransaction(String user)throws Exception {
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
@@ -34,7 +35,8 @@ public class QueryDaoImpl implements QueryDao {
         return tran;
     }
 
-    public List<Object[]> getAllTimeOut() {
+    @Override
+    public List<Object[]> getAllTimeOut()throws Exception{
         Session session = FactoryConfiguration.getInstance().getSession();
         Transaction transaction = session.beginTransaction();
 
